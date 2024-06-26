@@ -16,10 +16,8 @@ module.exports = merge(commonConfig, {
   devServer: {
     hot: true, // enable HMR on the server
     port: 4025,
-    historyApiFallback: {
-      publicPath: '/',
-      disableDotRule: true,
-    },
+    historyApiFallback: true,
+    disableHostCheck: true
   },
   devtool: 'cheap-module-source-map',
   plugins: [

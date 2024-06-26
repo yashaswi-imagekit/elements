@@ -1,5 +1,6 @@
-export const DEFAULT_API_URL =
-  'https://raw.githubusercontent.com/stoplightio/elements/main/demo/src/reference/todo.v1.yaml';
+// export const DEFAULT_API_URL = 'https://raw.githubusercontent.com/digitalocean/openapi/main/specification/DigitalOcean-public.v2.yaml';
+export const DEFAULT_API_URL = 'https://raw.githubusercontent.com/Yashaswi-1998/OpenApi/main/Imagekit.yaml';
+// export const DEFAULT_API_URL = 'https://raw.githubusercontent.com/imagekitio/openapi/dev/v1.0.0.yaml'
 
 export const EXAMPLE_SPECS = [
   {

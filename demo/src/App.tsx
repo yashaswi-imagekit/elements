@@ -36,13 +36,19 @@ export function App() {
       }, 0);
     },
   });
+function Component({myName}:{myName:any}){
+  return (<div>{myName}</div>)
+}
+  const pageProps= {
+    myName:"Its working"
+  }
 
   return (
     <MosaicProvider>
       <GlobalContext.Provider value={globalState}>
         <Flex direction="col" bg="canvas" h="screen">
-          <DemoNavbar />
-          <ElementsAPI />
+          {/* <DemoNavbar /> */}
+          <ElementsAPI  Component={Component} pageProps={pageProps}/>
         </Flex>
       </GlobalContext.Provider>
     </MosaicProvider>
