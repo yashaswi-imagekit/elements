@@ -41,12 +41,14 @@ interface ResponsesProps {
   onMediaTypeChange(mediaType: string): void;
   onStatusCodeChange(statusCode: string): void;
   isCompact?: boolean;
+  responseStatusCode?: string
 }
 
 export const Responses = ({
   responses: unsortedResponses,
   onStatusCodeChange,
   onMediaTypeChange,
+  responseStatusCode,
   isCompact,
 }: ResponsesProps) => {
   const responses = sortBy(
@@ -70,9 +72,15 @@ export const Responses = ({
   );
 
   React.useEffect(() => {
+    if (responseStatusCode)
+      setActiveResponseId(responseStatusCode)
+  }, [responseStatusCode])
+
+  React.useEffect(() => {
     onStatusCodeChange(activeResponseId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeResponseId]);
+
 
   if (!responses.length) return null;
 
@@ -142,7 +150,7 @@ export const Responses = ({
 
   return (
     <VStack spacing={8} as={Tabs} selectedId={activeResponseId} onChange={setActiveResponseId} appearance="pill">
-      <SectionTitle title="Responses" isCompact={isCompact}>
+      <SectionTitle title="Responses" size={3} isCompact={isCompact} direction="col" alignSelf="flex-start" pb={2}>
         {isCompact ? compactResponses : tabResponses}
       </SectionTitle>
 
@@ -179,25 +187,25 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
 
   return (
-    <VStack spacing={8} pt={8}>
+    <VStack spacing={8} pt={2}>
       {description && (
-        <Box pos="relative">
-          <MarkdownViewer markdown={description} />
+        <Box fontSize='xl' style={{ color: "#4A5568" }} pos="relative">
+          <MarkdownViewer style={{fontSize: "16px"}} className="sl-font-normal sl-leading-normal" markdown={description} />
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
 
       {headers.length > 0 && (
-        <VStack spacing={5}>
-          <SectionSubtitle title="Headers" id="response-headers" />
+        <VStack spacing={4}>
+          <SectionSubtitle title="Headers" size={4} id="response-headers" />
           <Parameters parameterType="header" parameters={headers} />
         </VStack>
       )}
 
       {contents.length > 0 && (
-        <>
-          <SectionSubtitle title="Body" id="response-body">
-            <Flex flex={1} justify="end">
+        <VStack spacing={2}>
+          <SectionSubtitle title="Body" size={4} pb={0} id="response-body">
+            <Flex flex={1} justify="end" mb={0}>
               <Select
                 aria-label="Response Body Content Type"
                 value={String(chosenContent)}
@@ -219,7 +227,7 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
               nodeHasChanged={nodeHasChanged}
             />
           )}
-        </>
+        </VStack>
       )}
     </VStack>
   );

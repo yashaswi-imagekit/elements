@@ -24,6 +24,11 @@ type SidebarLayoutProps = {
   exportProps?: ExportButtonProps;
   tryItCredentialsPolicy?: 'omit' | 'include' | 'same-origin';
   tryItCorsProxy?: string;
+  locationPath?: string;
+  Component?: any;
+  pageProps?: any;
+  mobile?: boolean;
+  requestNoteMarkdown?:string;
 };
 
 export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
@@ -36,6 +41,11 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
   exportProps,
   tryItCredentialsPolicy,
   tryItCorsProxy,
+  locationPath,
+  Component,
+  pageProps,
+  mobile,
+  requestNoteMarkdown,
 }) => {
   const container = React.useRef<HTMLDivElement>(null);
   const tree = React.useMemo(
@@ -43,7 +53,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
     [serviceNode, hideSchemas, hideInternal],
   );
   const location = useLocation();
-  const { pathname } = location;
+  const pathname = locationPath || "/";
   const isRootPath = !pathname || pathname === '/';
   const node = isRootPath ? serviceNode : serviceNode.children.find(child => child.uri === pathname);
 
@@ -87,9 +97,8 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
       <PoweredByLink source={serviceNode.name} pathname={pathname} packageType="elements" />
     </>
   );
-
   return (
-    <SidebarLayout ref={container} sidebar={sidebar}>
+    <SidebarLayout ref={container} sidebar={sidebar} mobile={mobile}>
       {node && (
         <ParsedDocs
           key={pathname}
@@ -101,6 +110,10 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
           exportProps={exportProps}
           tryItCredentialsPolicy={tryItCredentialsPolicy}
           tryItCorsProxy={tryItCorsProxy}
+          Component={Component}
+          pageProps={pageProps}
+          mobile={mobile}
+          requestNoteMarkdown={requestNoteMarkdown}
         />
       )}
     </SidebarLayout>

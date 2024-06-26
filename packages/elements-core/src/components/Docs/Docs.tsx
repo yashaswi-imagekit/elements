@@ -115,6 +115,10 @@ interface BaseDocsProps {
      * @example 600
      */
     compact?: number | boolean;
+
+    Component?: any
+    pageProps?: any
+    mobile?: boolean
   };
 
   nodeHasChanged?: NodeHasChangedFn<React.ReactNode>;
@@ -141,6 +145,10 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
    * The input data for the component to display.
    */
   data: T;
+  Component?: any;
+  pageProps?: any;
+  mobile?: boolean
+  requestNoteMarkdown?: string
 }
 
 export const Docs = React.memo<DocsProps>(
@@ -176,14 +184,18 @@ export const Docs = React.memo<DocsProps>(
 
 export interface ParsedDocsProps extends BaseDocsProps {
   node: ParsedNode;
+  Component?: any;
+  pageProps?: any;
+  mobile?: boolean
+  requestNoteMarkdown?:string
 }
 
-export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocsProps) => {
+export const ParsedDocs = ({ node, nodeUnsupported, Component, pageProps, mobile,requestNoteMarkdown, ...commonProps }: ParsedDocsProps) => {
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;
     case 'http_operation':
-      return <HttpOperation data={node.data} {...commonProps} />;
+      return <HttpOperation data={node.data} mobile={mobile} Component={Component} pageProps={pageProps} requestNoteMarkdown={requestNoteMarkdown} {...commonProps} />;
     case 'http_service':
       return <HttpService data={node.data} {...commonProps} />;
     case 'model':

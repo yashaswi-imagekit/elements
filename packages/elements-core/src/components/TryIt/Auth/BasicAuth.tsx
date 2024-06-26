@@ -15,10 +15,11 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
 
   return (
     <Panel.Content className="ParameterGrid" data-test="auth-try-it-row">
-      <div>Username</div>
+      <div>API key</div>
       <Text mx={3}>:</Text>
       <Flex flex={1}>
         <Input
+          autoComplete="new-username"
           style={{ paddingLeft: 15 }}
           aria-label="Username"
           appearance="minimal"
@@ -28,21 +29,6 @@ export const BasicAuth: React.FC<BasicAuthProps> = ({ onChange, value }) => {
           type="text"
           required
           onChange={e => onCredentialsChange(e.currentTarget.value, password)}
-        />
-      </Flex>
-      <div>Password</div>
-      <Text mx={3}>:</Text>
-      <Flex flex={1}>
-        <Input
-          style={{ paddingLeft: 15 }}
-          aria-label="Password"
-          appearance="minimal"
-          flex={1}
-          placeholder="password"
-          value={password}
-          type="password"
-          required
-          onChange={e => onCredentialsChange(username, e.currentTarget.value)}
         />
       </Flex>
     </Panel.Content>

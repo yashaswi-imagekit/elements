@@ -42,7 +42,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
 
   return (
     <VStack spacing={6}>
-      <SectionSubtitle title="Body" id="request-body">
+      <SectionSubtitle size={4} title="Body" id="request-body">
         {contents.length > 0 && (
           <Flex flex={1} justify="end">
             <Select
@@ -58,7 +58,7 @@ export const Body = ({ body, onChange }: BodyProps) => {
 
       {description && (
         <Box pos="relative">
-          <MarkdownViewer markdown={description} />
+          <MarkdownViewer style={{fontSize: "16px"}} className="sl-font-normal sl-leading-normal" markdown={description} />
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}

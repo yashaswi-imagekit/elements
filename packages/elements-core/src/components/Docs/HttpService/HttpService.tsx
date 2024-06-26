@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, NodeAnnotation, VStack } from '@stoplight/mosaic';
+import { Box, Flex, Heading, InvertTheme, NodeAnnotation, VStack } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { IHttpService } from '@stoplight/types';
 import * as React from 'react';
@@ -63,22 +63,22 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
 
           <Box data-test="security">
             {data.security?.length ? (
-              <SecuritySchemes
-                secSchemes={data.security}
-                defaultScheme={query.get('security') || undefined}
-                parentId={data.id}
-              />
+                <SecuritySchemes
+                  secSchemes={data.security}
+                  defaultScheme={query.get('security') || undefined}
+                  parentId={data.id}
+                />
             ) : null}
           </Box>
 
           <Box data-test="additional-info">
             {(data.contact?.email || data.license || data.termsOfService) && (
-              <AdditionalInfo
-                id={data.id}
-                contact={data.contact}
-                license={data.license}
-                termsOfService={data.termsOfService}
-              />
+                <AdditionalInfo
+                  id={data.id}
+                  contact={data.contact}
+                  license={data.license}
+                  termsOfService={data.termsOfService}
+                />
             )}
           </Box>
         </VStack>

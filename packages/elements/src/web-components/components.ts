@@ -17,4 +17,10 @@ export const ApiElement = createElementClass(API, {
   tryItCredentialsPolicy: { type: 'string' },
   tryItCorsProxy: { type: 'string' },
   maxRefDepth: { type: 'number' },
+  locationPath: { type: 'string', defaultValue: '/' },
+  Component: { type: "function" },
+  pageProps: { type: "object" },
+  mobile: { type: "boolean" },
+  host: { type: "string", defaultValue: '' },
+  requestNoteMarkdown:{ type: 'string', defaultValue: '' },
 });

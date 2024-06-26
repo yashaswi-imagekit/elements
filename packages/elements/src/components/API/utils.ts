@@ -1,4 +1,8 @@
 import { isHttpOperation, isHttpService, TableOfContentsItem } from '@stoplight/elements-core';
+import {
+  TableOfContentsGroup,
+  TableOfContentsGroupItem,
+} from '@stoplight/elements-core/components/MosaicTableOfContents/types';
 import { NodeType } from '@stoplight/types';
 import { defaults } from 'lodash';
 
@@ -108,12 +112,58 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
           title: operationNode.name,
           type: operationNode.type,
           meta: operationNode.data.method,
+          tags: operationNode.tags,
         };
+      });
+
+      const newTreeArray: TableOfContentsGroupItem[] = [];
+      items.forEach(item => {
+        if (item.tags.length > 1) {
+          const subTag = item.tags[1];
+          if (
+            newTreeArray.findIndex(item => {
+              return item.title === subTag;
+            }) >= 0
+          ) {
+            const subIndex = newTreeArray.findIndex(item => {
+              return item.title === subTag;
+            });
+
+            (newTreeArray[subIndex] as TableOfContentsGroup).items.push({
+              id: item.id,
+              slug: item.slug,
+              title: item.title,
+              type: item.type,
+              meta: item.meta,
+            });
+          } else {
+            newTreeArray.push({
+              title: subTag,
+              items: [
+                {
+                  id: item.id,
+                  slug: item.slug,
+                  title: item.title,
+                  type: item.type,
+                  meta: item.meta,
+                },
+              ],
+            });
+          }
+        } else {
+          newTreeArray.push({
+            id: item.id,
+            slug: item.slug,
+            title: item.title,
+            type: item.type,
+            meta: item.meta,
+          });
+        }
       });
       if (items.length > 0) {
         tree.push({
           title: group.title,
-          items,
+          items: newTreeArray,
         });
       }
     });
@@ -122,22 +172,6 @@ export const computeAPITree = (serviceNode: ServiceNode, config: ComputeAPITreeC
   let schemaNodes = serviceNode.children.filter(node => node.type === NodeType.Model);
   if (mergedConfig.hideInternal) {
     schemaNodes = schemaNodes.filter(node => !node.data['x-internal']);
-  }
-
-  if (!mergedConfig.hideSchemas && schemaNodes.length) {
-    tree.push({
-      title: 'Schemas',
-    });
-
-    schemaNodes.forEach(node => {
-      tree.push({
-        id: node.uri,
-        slug: node.uri,
-        title: node.name,
-        type: node.type,
-        meta: '',
-      });
-    });
   }
   return tree;
 };

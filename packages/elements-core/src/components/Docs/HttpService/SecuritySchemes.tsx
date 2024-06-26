@@ -25,10 +25,7 @@ export const SecuritySchemes: React.FC<SecuritySchemesProps> = ({
 
   return (
     <Panel rounded isCollapsible={defaultCollapsed} data-test="security-row">
-      <Panel.Titlebar bg="canvas-300">
-        <Box as="span" role="heading">
-          Security
-        </Box>
+      <Panel.Titlebar style={{height:"0px"}}>
       </Panel.Titlebar>
       <Panel.Content p={0}>
         {includeOptional && <OptionalMessage />}
@@ -60,10 +57,10 @@ const SecurityScheme: React.FC<
   } & Pick<PanelProps, 'defaultIsOpen' | 'isCollapsible'>
 > = ({ schemes, defaultIsOpen, isCollapsible, showSchemeKey }) => {
   return (
-    <Panel defaultIsOpen={defaultIsOpen} isCollapsible={isCollapsible} pos="relative">
-      <Panel.Titlebar>
+    <Panel  className='sl-bg-canvas-50' defaultIsOpen={defaultIsOpen} isCollapsible={isCollapsible} pos="relative">
+      <Panel.Titlebar className='sl-bg-canvas-500'>
         <Box as="span" role="heading">
-          {getReadableSecurityNames(schemes, showSchemeKey)}
+          Authentication
         </Box>
       </Panel.Titlebar>
       <Panel.Content>

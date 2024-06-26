@@ -27,8 +27,7 @@ export const PanelContent: React.FC<{ schemes: HttpSecurityScheme[] }> = ({ sche
             />
           )}
           <MarkdownViewer
-            style={{ fontSize: 12 }}
-            markdown={`${scheme.description ?? ''}\n\n` + getDefaultDescription(scheme)}
+            markdown={`${scheme.description ?? ''}`}
           />
           <NodeAnnotation change={nodeHasChanged?.({ nodeId: scheme.id })} />
         </Box>

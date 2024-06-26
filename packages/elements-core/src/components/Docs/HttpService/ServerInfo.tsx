@@ -32,9 +32,8 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
   }
 
   return (
-    <InvertTheme>
-      <Panel rounded isCollapsible={false} className="BaseURLContent" w="full" data-test="servers">
-        <Panel.Titlebar whitespace="nowrap">API Base URL</Panel.Titlebar>
+      <Panel rounded isCollapsible={false} className="BaseURLContent sl-bg-canvas-50" w="full" data-test="servers">
+        <Panel.Titlebar  className='sl-bg-canvas-500' whitespace="nowrap">API Base URL</Panel.Titlebar>
         <Panel.Content w="full" className="sl-flex sl-flex-col">
           <VStack spacing={1} divider>
             {serversToDisplay.map((server, index) => (
@@ -48,7 +47,6 @@ export const ServerInfo: React.FC<ServerInfoProps> = ({ servers, mockUrl }) => {
           </VStack>
         </Panel.Content>
       </Panel>
-    </InvertTheme>
   );
 };
 

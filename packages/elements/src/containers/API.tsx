@@ -9,6 +9,7 @@ import {
   withQueryClientProvider,
   withRouter,
   withStyles,
+  HostProvider,
 } from '@stoplight/elements-core';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { flow } from 'lodash';
@@ -53,6 +54,9 @@ export interface CommonAPIProps extends RoutingProps {
   layout?: 'sidebar' | 'stacked';
   logo?: string;
 
+  locationPath?: string
+  requestNoteMarkdown?: string
+
   /**
    * Allows hiding the TryIt component
    */
@@ -95,11 +99,17 @@ export interface CommonAPIProps extends RoutingProps {
    * @default undefined
    */
   maxRefDepth?: number;
+
+  Component?: any;
+  pageProps?: any;
+  mobile?: boolean;
+  host?: string;
 }
 
 const propsAreWithDocument = (props: APIProps): props is APIPropsWithDocument => {
   return props.hasOwnProperty('apiDescriptionDocument');
 };
+
 
 export const APIImpl: React.FC<APIProps> = props => {
   const {
@@ -113,9 +123,21 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCredentialsPolicy,
     tryItCorsProxy,
     maxRefDepth,
+    locationPath,
+    Component,
+    pageProps,
+    mobile,
+    host,
+    requestNoteMarkdown,
   } = props;
   const location = useLocation();
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
+  React.useEffect(() => {
+    if (typeof document == 'object') {
+      // @ts-ignore
+      document.title = "New Title";
+  } 
+  }, []);
 
   const { data: fetchedDocument, error } = useQuery(
     [apiDescriptionUrl],
@@ -169,31 +191,38 @@ export const APIImpl: React.FC<APIProps> = props => {
   }
 
   return (
-    <InlineRefResolverProvider document={parsedDocument} maxRefDepth={maxRefDepth}>
-      {layout === 'stacked' ? (
-        <APIWithStackedLayout
-          serviceNode={serviceNode}
-          hideTryIt={hideTryIt}
-          hideExport={hideExport}
-          exportProps={exportProps}
-          tryItCredentialsPolicy={tryItCredentialsPolicy}
-          tryItCorsProxy={tryItCorsProxy}
-          location={location}
-        />
-      ) : (
-        <APIWithSidebarLayout
-          logo={logo}
-          serviceNode={serviceNode}
-          hideTryIt={hideTryIt}
-          hideSchemas={hideSchemas}
-          hideInternal={hideInternal}
-          hideExport={hideExport}
-          exportProps={exportProps}
-          tryItCredentialsPolicy={tryItCredentialsPolicy}
-          tryItCorsProxy={tryItCorsProxy}
-        />
-      )}
-    </InlineRefResolverProvider>
+    <HostProvider host={host ?? ""} locationPath={locationPath ?? ""} mobile={mobile ?? false}>
+      <InlineRefResolverProvider document={parsedDocument} maxRefDepth={maxRefDepth}>
+          {layout === 'stacked' ? (
+          <APIWithStackedLayout
+            serviceNode={serviceNode}
+            hideTryIt={hideTryIt}
+            hideExport={hideExport}
+            exportProps={exportProps}
+            tryItCredentialsPolicy={tryItCredentialsPolicy}
+            tryItCorsProxy={tryItCorsProxy}
+            location={location}
+          />
+        ) : (
+          <APIWithSidebarLayout
+            locationPath={locationPath}
+            requestNoteMarkdown={requestNoteMarkdown}
+            Component={Component}
+            pageProps={pageProps}
+            mobile={mobile}
+            logo={logo}
+            serviceNode={serviceNode}
+            hideTryIt={hideTryIt}
+            hideSchemas={hideSchemas}
+            hideInternal={hideInternal}
+            hideExport={hideExport}
+            exportProps={exportProps}
+            tryItCredentialsPolicy={tryItCredentialsPolicy}
+            tryItCorsProxy={tryItCorsProxy}
+          />
+        )}
+      </InlineRefResolverProvider>
+    </HostProvider>
   );
 };
 

@@ -96,8 +96,19 @@ function computeChildNodes(
         let parsedUri;
         const encodedPath = String(encodePointerFragment(path));
 
-        if (operationDocument.iid) {
-          parsedUri = `/operations/${operationDocument.iid}`;
+        if (operationDocument.iid && operationDocument.tags?.length && operationDocument.tags?.length > 0) {
+          let tempURI = '';
+          operationDocument.tags.forEach(tag => {
+            let name = tag.name.trim().toLowerCase();
+            name = name.replaceAll('(', '');
+            name = name.replaceAll(')', '');
+            name = name.replaceAll(' ', '-');
+            tempURI += `/${name}`;
+          });
+
+          parsedUri = `${tempURI}/${operationDocument.iid}`;
+        } else if (operationDocument.iid) {
+          parsedUri = `/${operationDocument.iid}`;
         } else {
           parsedUri = uri.replace(encodedPath, slugify(path));
         }

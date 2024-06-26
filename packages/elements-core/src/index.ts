@@ -23,6 +23,7 @@ export { TryIt, TryItProps, TryItWithRequestSamples, TryItWithRequestSamplesProp
 export { HttpMethodColors, NodeTypeColors, NodeTypeIconDefs, NodeTypePrettyName } from './constants';
 export { MockingProvider } from './containers/MockingProvider';
 export { InlineRefResolverProvider } from './context/InlineRefResolver';
+export { HostProvider } from './context/Host'
 export { PersistenceContextProvider, withPersistenceBoundary } from './context/Persistence';
 export { RouterTypeContext } from './context/RouterType';
 export { withMosaicProvider } from './hoc/withMosaicProvider';

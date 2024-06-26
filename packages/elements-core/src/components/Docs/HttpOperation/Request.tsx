@@ -38,49 +38,51 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
   const securitySchemes = security ?? [];
   const hasRequestData = Boolean(
     securitySchemes.length ||
-      pathParams.length ||
-      queryParams.length ||
-      headerParams.length ||
-      cookieParams.length ||
-      !bodyIsEmpty,
+    pathParams.length ||
+    queryParams.length ||
+    headerParams.length ||
+    cookieParams.length ||
+    !bodyIsEmpty,
   );
   if (!hasRequestData) return null;
 
   return (
-    <VStack spacing={8}>
-      <SectionTitle title="Request" />
+    <VStack spacing={4}>
+      <SectionTitle title="Request" size={3} />
 
       <SecuritySchemes schemes={securitySchemes} parentId={operation.id} />
 
-      {pathParams.length > 0 && (
-        <VStack spacing={5}>
-          <SectionSubtitle title="Path Parameters" />
-          <Parameters parameterType="path" parameters={pathParams} />
-        </VStack>
-      )}
+      <VStack spacing={10} pt={4}>
+        {pathParams.length > 0 && (
+          <VStack spacing={2}>
+            <SectionSubtitle title="Path Parameters" size={4} />
+            <Parameters parameterType="path" parameters={pathParams} />
+          </VStack>
+        )}
 
-      {queryParams.length > 0 && (
-        <VStack spacing={5}>
-          <SectionSubtitle title="Query Parameters" />
-          <Parameters parameterType="query" parameters={queryParams} />
-        </VStack>
-      )}
+        {queryParams.length > 0 && (
+          <VStack spacing={2}>
+            <SectionSubtitle title="Query Parameters" size={4} />
+            <Parameters parameterType="query" parameters={queryParams} />
+          </VStack>
+        )}
 
-      {headerParams.length > 0 && (
-        <VStack spacing={5}>
-          <SectionSubtitle title="Headers" id="request-headers" />
-          <Parameters parameterType="header" parameters={headerParams} />
-        </VStack>
-      )}
+        {headerParams.length > 0 && (
+          <VStack spacing={2}>
+            <SectionSubtitle title="Headers" id="request-headers" size={4} />
+            <Parameters parameterType="header" parameters={headerParams} />
+          </VStack>
+        )}
 
-      {cookieParams.length > 0 && (
-        <VStack spacing={5}>
-          <SectionSubtitle title="Cookies" id="request-cookies" />
-          <Parameters parameterType="cookie" parameters={cookieParams} />
-        </VStack>
-      )}
+        {cookieParams.length > 0 && (
+          <VStack spacing={2}>
+            <SectionSubtitle title="Cookies" id="request-cookies" size={4} />
+            <Parameters parameterType="cookie" parameters={cookieParams} />
+          </VStack>
+        )}
 
-      {body && <Body onChange={onChange} body={body} />}
+        {body && <Body onChange={onChange} body={body} />}
+      </VStack>
     </VStack>
   );
 };
@@ -97,7 +99,7 @@ const SecurityPanel: React.FC<{ schemes: HttpSecurityScheme[]; includeKey: boole
       defaultIsOpen={!!expandedState[getReadableSecurityNames(schemes)]}
       onChange={isOpen => setExpanded({ ...expandedState, [getReadableSecurityNames(schemes)]: isOpen })}
     >
-      <Box m={-2}>
+      <Box m={0}>
         <PanelContent schemes={schemes} />
       </Box>
     </SubSectionPanel>

@@ -29,14 +29,14 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
   const tosLink = termsOfService ? `[Terms of Service](${termsOfService})` : '';
 
   return contactLink || licenseLink || tosLink ? (
-    <Panel rounded isCollapsible={false} pos="relative">
+    <Panel  className='sl-bg-canvas-50' rounded isCollapsible={false} pos="relative">
       <Panel.Titlebar bg="canvas-300">
         <span role="heading">Additional Information</span>
       </Panel.Titlebar>
 
       <Panel.Content p={0}>
         <Panel.Content>
-          <MarkdownViewer style={{ fontSize: 12 }} markdown={`${contactLink}\n \n${licenseLink}\n \n ${tosLink}`} />
+          <MarkdownViewer markdown={`${contactLink}\n \n${licenseLink}\n \n ${tosLink}`} />
         </Panel.Content>
       </Panel.Content>
 

@@ -30,7 +30,7 @@ export const RequestBody: React.FC<RequestBodyProps> = ({ examples, requestBody,
           style={
             // when not rendering in prose (markdown), reduce font size to be consistent with base UI
             {
-              fontSize: 12,
+              fontSize: "14px",
             }
           }
         />
